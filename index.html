@@ -3,39 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وب‌اپ تلگرام</title>
+    <title>وب‌اپ ثبت ایده</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
         }
-        input, button {
+        input, textarea, button {
             padding: 10px;
             font-size: 16px;
             margin-top: 10px;
+            display: block;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
 <body>
-    <h1>به وب‌اپ تلگرام خوش آمدید!</h1>
-    <p>اطلاعات خود را وارد کنید و به ربات ارسال کنید.</p>
+    <h1>سلام <span id="userName">کاربر</span>!</h1>
+    <p>ایده خود را در فرم زیر وارد کنید.</p>
     
-    <!-- فرم ورود اطلاعات -->
-    <form id="dataForm">
-        <input type="text" id="userInput" placeholder="نام خود را وارد کنید">
-        <button type="button" onclick="sendData()">ارسال به ربات</button>
+    <form id="ideaForm">
+        <input type="text" id="ideaTitle" placeholder="عنوان ایده">
+        <textarea id="ideaText" rows="4" placeholder="متن ایده"></textarea>
+        <button type="button" onclick="sendIdea()">ارسال ایده</button>
     </form>
 
     <script>
-        function sendData() {
-            const userInput = document.getElementById('userInput').value;
-            if (window.Telegram.WebApp) {
-                // ارسال داده به ربات تلگرام
-                window.Telegram.WebApp.sendData(userInput);
-                alert("اطلاعات به ربات ارسال شد: " + userInput);
+        // دریافت نام کاربر از URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');
+        if (name) {
+            document.getElementById('userName').textContent = name;
+        }
+
+        function sendIdea() {
+            const ideaTitle = document.getElementById('ideaTitle').value;
+            const ideaText = document.getElementById('ideaText').value;
+
+            if (window.Telegram.WebApp && ideaTitle && ideaText) {
+                // ارسال داده ایده به ربات تلگرام
+                window.Telegram.WebApp.sendData(`${ideaTitle}|${ideaText}`);
+                alert("ایده شما ارسال شد!");
             } else {
-                alert("WebApp API در دسترس نیست.");
+                alert("لطفاً عنوان و متن ایده را وارد کنید.");
             }
         }
     </script>
