@@ -1,12 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Web App Test</title>
+    <title>وب‌اپ تلگرام</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>این یک تست ساده است</h1>
-    <p>این وب‌اپلیکیشن برای تست ربات تلگرام است.</p>
+    <h1>به وب‌اپ تلگرام خوش آمدید!</h1>
+    <p>اطلاعات خود را وارد کنید و به ربات ارسال کنید.</p>
+    
+    <!-- فرم ورود اطلاعات -->
+    <form id="dataForm">
+        <input type="text" id="userInput" placeholder="نام خود را وارد کنید">
+        <button type="button" onclick="sendData()">ارسال به ربات</button>
+    </form>
+
+    <script>
+        function sendData() {
+            const userInput = document.getElementById('userInput').value;
+            if (window.Telegram.WebApp) {
+                // ارسال داده به ربات تلگرام
+                window.Telegram.WebApp.sendData(userInput);
+                alert("اطلاعات به ربات ارسال شد: " + userInput);
+            } else {
+                alert("WebApp API در دسترس نیست.");
+            }
+        }
+    </script>
 </body>
 </html>
